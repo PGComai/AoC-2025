@@ -59,7 +59,6 @@ func _ready() -> void:
 	var og_num_ranges: int = fresh_ranges.size()
 	var ranges_overlap := true
 	fresh_ranges_unique = fresh_ranges.duplicate(true)
-	var fresh_ranges_unique_copy: Array[Array] = fresh_ranges_unique.duplicate(true)
 	while ranges_overlap:
 		var overlapping_ranges: Array[int] = find_range_overlap(fresh_ranges_unique)
 		if overlapping_ranges.size() == 0:
