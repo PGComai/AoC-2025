@@ -55,10 +55,11 @@ func _ready() -> void:
 						on_num = true
 					current_num += char
 			if current_num != "":
+				
 				if problems_2.size() <= current_i:
-					problems_2.append({str(line_ct) + "." + str(keep_i - 1): current_num})
+					problems_2.append({str(line_ct) + "." + str(keep_i): current_num})
 				else:
-					problems_2[current_i][str(line_ct) + "." + str(keep_i - 1)] = current_num
+					problems_2[current_i][str(line_ct) + "." + str(keep_i)] = current_num
 			line_ct += 1
 	else:
 		var file := FileAccess.open("res://day 6/input.txt", FileAccess.READ)
@@ -126,19 +127,37 @@ func _ready() -> void:
 		for i in p2.size() - 1:
 			problems_2_again[problem_num].append(dummy_num)
 		problems_2_again[problem_num].append(p2[p2.keys()[-1]])
-		problem_num += 1
 		
-		for pos: String in p2:
-			var value: String = p2[pos]
-			if value.is_valid_int():
-				var line_num: int = pos.get_slice(".", 0).to_int()
-				var col_end: int = pos.get_slice(".", 1).to_int()
-				
-				
+		
+		var problem_again_again: Array[String] = []
+		for col: int in range(col_min, col_max + 1):
+			for pos: String in p2:
+				var value: String = p2[pos]
+				if value.is_valid_int():
+					var line_num: int = pos.get_slice(".", 0).to_int()
+					var col_end: int = pos.get_slice(".", 1).to_int()
+					
+					var digits: Dictionary = {}
+					var ct: int = 0
+					for d: String in value.split(""):
+						digits[ct + col_min] = d
+						ct += 1
+					
+					if digits.has(col):
+						var i: int = col - col_min
+						if problem_again_again.size() <= i:
+							problem_again_again.append(digits[col])
+						else:
+							problem_again_again[i] += digits[col]
+						#print(digits[col])
+						problems_2_again[problem_num]
+			print("-------")
+		problem_num += 1
+		print(problem_again_again)
 		
 	print("-------------")
 	
-	print(problems_2_again)
+	#print(problems_2_again)
 	
 	# pt 2 attempt 1
 	#var problems_2: Array[Array] = []
